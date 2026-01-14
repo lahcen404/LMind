@@ -1,0 +1,18 @@
+{
+    "name": "lahcensb07/l-mind",
+    "require": {
+        "vlucas/phpdotenv": "^5.6"
+    },
+    "autoload": {
+    "psr-4": {
+        "app\\": "app/",
+        "config\\": "config/"
+    }
+},
+    "authors": [
+        {
+            "name": "lahcen404",
+            "email": "lahcen.maskour2003@gmail.com"
+        }
+    ]
+}

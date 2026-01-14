@@ -1,0 +1,10 @@
+RewriteEngine On
+
+# check if it's a file
+RewriteCond %{REQUEST_FILENAME} !-f
+
+# check if it's folder 
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# redirect to index.php
+RewriteRule ^ index.php [L]
