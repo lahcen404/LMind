@@ -1,7 +1,8 @@
 {
     "name": "lahcensb07/l-mind",
     "require": {
-        "vlucas/phpdotenv": "^5.6"
+        "vlucas/phpdotenv": "^5.6",
+        "eftec/bladeone": "^4.19"
     },
     "autoload": {
     "psr-4": {
