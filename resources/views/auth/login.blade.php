@@ -1,5 +1,5 @@
 @extends('templates.layout')
-@section('title', '404 - Page Not Fouund')
+@section('title', '404 - Login')
 @section('content')
     <!-- Login Container - "Little Dark" Version (Slate 800) -->
     <div class="w-full max-w-[420px] bg-slate-800 rounded-2xl shadow-2xl border border-slate-700 overflow-hidden">

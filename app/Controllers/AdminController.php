@@ -6,20 +6,17 @@ use config\DBConnection;
 
 class AdminController
 {
-    public function testBlade()
+    public function index()
     {
         
-        try {
-            DBConnection::getInstance()->connectDB();
-            $status = "Connected";
-        } catch (\Exception $e) {
-            $status = "Connection Faiiiled: " . $e->getMessage();
-        }
+        // try {
+        //     DBConnection::getInstance()->connectDB();
+        //     $status = "Connected";
+        // } catch (\Exception $e) {
+        //     $status = "Connection Faiiiled: " . $e->getMessage();
+        // }
 
         
-        return View::render('test', [
-            'name' => 'Lahcen',
-            'db_status' => $status
-        ]);
+        return View::render('admin.dashboard');
     }
 }
