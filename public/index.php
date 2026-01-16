@@ -2,13 +2,13 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
-$dotenv->load();
 
 
-use config\DBConnection;
 
-use app\Controllers\AdminController;
+use app\Helpers\View;
+use app\Routes\Router;
 
-$controller = new AdminController();
-$controller->testBlade();
+$router = new Router();
+$router->get('/login','AuthController@index');
+$router->get('/404','NotFoundController@index');
+$router->dispatch();
