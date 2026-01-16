@@ -8,9 +8,7 @@ $dotenv->load();
 
 use config\DBConnection;
 
-try {
-    $db = DBConnection::getInstance()->connectDB();
-    echo "db connected successfully";
-} catch (Exception $e) {
-    echo "Error: " . $e->getMessage();
-}
+use app\Controllers\AdminController;
+
+$controller = new AdminController();
+$controller->testBlade();
