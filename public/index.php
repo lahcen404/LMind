@@ -10,5 +10,6 @@ use app\Routes\Router;
 
 $router = new Router();
 $router->get('/login','AuthController@index');
+$router->get('/admin/dashboard','AdminController@index');
 $router->get('/404','NotFoundController@index');
 $router->dispatch();
