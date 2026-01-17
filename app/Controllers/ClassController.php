@@ -19,4 +19,9 @@ class ClassController
     {
         return View::render('admin.classes.index');
     }
+
+    public function assignLearner()
+    {
+        return View::render('admin.classes.assignLearners');
+    }
 }
