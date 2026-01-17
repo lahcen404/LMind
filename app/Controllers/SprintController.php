@@ -15,4 +15,9 @@ class SprintController
     {
         return View::render('admin.sprints.create');
     }
+
+    public function view()
+    {
+        return View::render('admin.sprints.view');
+    }
 }
