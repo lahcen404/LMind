@@ -15,5 +15,9 @@ $router->get('/admin/classes/create','ClassController@createClass');
 $router->get('/admin/classes/assignement','ClassController@assignement');
 $router->get('/admin/classes/assignement/learners','ClassController@assignLearner');
 $router->get('/admin/classes','ClassController@index');
+
+$router->get('/admin/sprints','SprintController@index');
+$router->get('/admin/sprints/create','SprintController@create');
+$router->get('/admin/sprints/view','SprintController@view');
 $router->get('/404','NotFoundController@index');
 $router->dispatch();
