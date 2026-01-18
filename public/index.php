@@ -22,5 +22,7 @@ $router->get('/admin/sprints/view','SprintController@view');
 
 $router->get('/admin/skills','SkillController@index');
 $router->get('/admin/skills/create','SkillController@create');
+
+$router->get('/admin/users','UsersController@index');
 $router->get('/404','NotFoundController@index');
 $router->dispatch();
