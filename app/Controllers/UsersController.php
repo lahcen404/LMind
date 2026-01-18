@@ -9,4 +9,8 @@ class UsersController{
     public function index(){
         return View::render('admin.users.index');
     }
+
+    public function create(){
+        return View::render('admin.users.create');
+    }
 }
