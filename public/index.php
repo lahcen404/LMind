@@ -26,5 +26,7 @@ $router->get('/admin/skills/create','SkillController@create');
 $router->get('/admin/users','UsersController@index');
 $router->get('/admin/users/create','UsersController@create');
 
+$router->get('/trainer/dashboard','TrainerController@index');
+
 $router->get('/404','NotFoundController@index');
 $router->dispatch();
