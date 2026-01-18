@@ -27,7 +27,9 @@ $router->get('/admin/users','UsersController@index');
 $router->get('/admin/users/create','UsersController@create');
 
 $router->get('/trainer/dashboard','TrainerController@index');
+$router->get('/trainer/briefs','BriefController@index');
 $router->get('/trainer/briefs/create','BriefController@create');
+$router->get('/trainer/briefs/details','BriefController@details');
 
 $router->get('/404','NotFoundController@index');
 $router->dispatch();
