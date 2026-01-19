@@ -49,7 +49,7 @@ abstract class User
     }
 
     public function setPassword(string $password): void{
-        $this->password = $password;
+        $this->password = password_hash($password, PASSWORD_DEFAULT);
     }
 
     public function setRole(Role $role): void{
