@@ -17,6 +17,7 @@ DROP TYPE IF EXISTS mastery_level;
 CREATE TYPE User_Role as ENUM ('ADMIN','TRAINER','LEARNER');
 CREATE TYPE Brief_Type as ENUM ('INDIVIDUAL','COLLECTIVE');
 CREATE TYPE mastery_level as ENUM ('IMITATE','ADAPT','TRANSPOSE');
+CREATE TYPE skill_category as ENUM ('FRONTEND','BACKEND','DEVOPS','SOFTSKILLS');
 
 -- table users
 CREATE TABLE users (
@@ -66,7 +67,8 @@ CREATE TABLE briefs (
 CREATE TABLE skills (
     id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     code VARCHAR(10) NOT NULL, 
-    description TEXT NOT NULL 
+    description TEXT NOT NULL ,
+	category skill_category not null
 );
 
 -- table brief_skills
@@ -95,3 +97,5 @@ CREATE TABLE evaluations (
     comment TEXT, 
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
 );
+
+select * from skills

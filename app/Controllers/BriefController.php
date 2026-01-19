@@ -10,6 +10,10 @@ class BriefController{
         return View::render('trainer.briefs.index');
     }
 
+    public function linkSkills(){
+        return View::render('trainer.briefs.briefSkill');
+    }
+
         public function create(){
             return View::render('trainer.briefs.create');
         }
