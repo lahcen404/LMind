@@ -37,7 +37,7 @@ class AuthService
             $errors;
         }
 
-        $user = $this->userRepository->findByEmail($email);
+        $user = $this->userRepository->findUserByEmail($email);
 
         $isMatch = $user && (password_verify($password, $user->getPassword()) || ($password === $user->getPassword()));
 
