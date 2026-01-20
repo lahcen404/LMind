@@ -47,5 +47,5 @@ $router->get('/trainer/evaluations/create','EvaluationController@create');
 $router->get('/404','NotFoundController@index');
 
 $router->post('/login','AuthController@login');
-$router->post('/logout','AuthController@logout');
+$router->get('/logout','AuthController@logout');
 $router->dispatch();
