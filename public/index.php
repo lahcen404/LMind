@@ -48,6 +48,7 @@ $router->get('/404','NotFoundController@index');
 
 $router->post('/login','AuthController@login');
 $router->post('/admin/users/create','UsersController@store');
+$router->get('/admin/users/delete','UsersController@delete');
 
 
 $router->get('/logout','AuthController@logout');

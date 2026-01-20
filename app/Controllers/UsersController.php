@@ -51,5 +51,29 @@ class UsersController{
         }
     }
 
+    public function delete()
+    {
+        $userService = UserService::getInstance();
+
+        $userId = isset($_GET['id']) ? (int)$_GET['id'] : null;
+
+        if ($userId === null) {
+            $_SESSION['error'] = "Invalid user ID.";
+            header('Location: /admin/users');
+            exit();
+        }
+
+        $deleted = $userService->deleteUser($userId);
+
+        if ($deleted) {
+            $_SESSION['success'] = "User deleted successfully!";
+        } else {
+            $_SESSION['error'] = "Failed to delete user.";
+        }
+
+        header('Location: /admin/users');
+        exit();
+    }
+
     
 }
