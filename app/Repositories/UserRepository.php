@@ -11,10 +11,10 @@ class UserRepository
     private UserDAO $userDAO;
     private UserMapper $userMapper;
 
-    public function __construct(UserDAO $userDAO, UserMapper $userMapper)
+    public function __construct()
     {
-        $this->userDAO = $userDAO;
-        $this->userMapper = $userMapper;
+        $this->userDAO = new  UserDAO;
+        $this->userMapper = new UserMapper;
     }
 
     public function findByEmail(string $email): ?User

@@ -3,7 +3,7 @@
 namespace app\DAOs;
 
 use app\Models\User;
-use Config\DBConnection;
+use config\DBConnection;
 
 class UserDAO{
 
@@ -16,12 +16,12 @@ class UserDAO{
 
     public function getUserByEmail($email): ?array{
 
-        $sql = "SELECT  * from users WHERE email = : $email";
+        $sql = "SELECT  * from users WHERE email = :email limit 1";
         $stmt = $this->db->prepare($sql);
         $stmt->execute(['email'=> $email]);
         $data = $stmt->fetch();
 
-        return $data;
+        return $data ?: null;
 
     }
 }
