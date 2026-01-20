@@ -8,21 +8,30 @@ use app\Models\User;
 
 class UserRepository
 {
-    private UserDAO $userDAO;
-    private UserMapper $userMapper;
 
-    public function __construct()
+    private static ?UserRepository $instance = null; 
+
+    public static function getInstance(): UserRepository
     {
-        $this->userDAO = new  UserDAO;
-        $this->userMapper = new UserMapper;
+        if (self::$instance === null) {
+            self::$instance = new UserRepository();
+        }
+        return self::$instance;
     }
+   
+    
 
     public function findUserByEmail(string $email): ?User
     {
-        $userData = $this->userDAO->getUserByEmail($email);
+
+        $userDAO = UserDAO::getInstance();
+        $userMapper = UserMapper::getInstance();
+
+
+        $userData = $userDAO->getUserByEmail($email);
 
         if ($userData) {
-            return $this->userMapper->toEntity($userData);
+            return $userMapper->toEntity($userData);
         }
 
         return null;
@@ -30,9 +39,12 @@ class UserRepository
 
     public function findUserById(int $id){
 
-        $userData = $this->userDAO->getUserById($id);
+        $userMapper = UserMapper::getInstance();
+        $userDAO = UserDAO::getInstance();
+
+        $userData = $userDAO->getUserById($id);
         if($userData){
-            return $this->userMapper::toEntity($userData);
+            return $userMapper::toEntity($userData);
         }
 
         return null;
@@ -42,7 +54,9 @@ class UserRepository
 
     public function getAllUsers(): array{
 
-        $rawData = $this->userDAO->getAllUsers();
+        $userDAO = UserDAO::getInstance();
+
+        $rawData = $userDAO->getAllUsers();
         $users = [];
         foreach($rawData as $data){
             $user = UserMapper::toEntity($data);
@@ -57,6 +71,8 @@ class UserRepository
 
     public function createUser(User $user): bool{
 
+        $userDAO = UserDAO::getInstance();
+
         $data=[
             'fullName' => $user->getFullName(),
             'email' => $user->getEmail(),
@@ -64,10 +80,13 @@ class UserRepository
             'role' => $user->getRole()->value,
         ];
 
-        return $this->userDAO->create($data);
+        return $userDAO->create($data);
     }
 
     public function updateUser(User $user): bool{
+
+        $userDAO = UserDAO::getInstance();
+
         $data = [
             
             'fullName' => $user->getFullName(),
@@ -76,12 +95,13 @@ class UserRepository
             'role' => $user->getRole()->value
         ];
 
-        return $this->userDAO->update($user->getId(),$data);
+        return $userDAO->update($user->getId(),$data);
     }
 
     public function deleteUser(int $id): bool{
 
-        return $this->userDAO->delete($id);
+        $userDAO = UserDAO::getInstance();
+        return $userDAO->delete($id);
     }
 
 }

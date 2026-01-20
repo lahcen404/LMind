@@ -9,6 +9,15 @@ use PDO;
 class UserDAO{
 
     private $db;
+    private static ?UserDAO $instance = null; 
+
+    public static function getInstance(): UserDAO
+    {
+        if (self::$instance === null) {
+            self::$instance = new UserDAO();
+        }
+        return self::$instance;
+    }
 
     public function __construct()
     {

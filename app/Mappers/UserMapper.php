@@ -10,6 +10,16 @@ use app\Models\User;
 
 class UserMapper{
 
+    private static ?UserMapper $instance = null; 
+
+    public static function getInstance(): UserMapper
+    {
+        if (self::$instance === null) {
+            self::$instance = new UserMapper();
+        }
+        return self::$instance;
+    }
+
     public static function toEntity(array $data): ?User{
 
         if(empty($data)){

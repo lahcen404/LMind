@@ -33,10 +33,7 @@
                     @if(isset($_SESSION['errors']['email']))
                     <p class="text-red-400 text-[10px] font-bold">{{ $_SESSION['errors']['email'] }}</p>
                     @endif
-                    
-                    @if(isset($_SESSION['errors']['email']))
-                        <p class="text-red-400 text-xs font-bold mt-1 ml-1">{{ $_SESSION['errors']['email'] }}</p>
-                    @endif
+
                 </div>
 
                 <!-- Password Field -->
@@ -51,10 +48,7 @@
                     @if(isset($_SESSION['errors']['password']))
                     <p class="text-red-400 text-[10px] font-bold">{{ $_SESSION['errors']['password'] }}</p>
                     @endif
-                
-                    @if(isset($_SESSION['errors']['password']))
-                        <p class="text-red-400 text-xs font-bold mt-1 ml-1">{{ $_SESSION['errors']['password'] }}</p>
-                    @endif
+       
                 </div>
 
                 <button type="submit" 
