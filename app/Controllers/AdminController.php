@@ -9,13 +9,10 @@ class AdminController
     public function index()
     {
         
-        // try {
-        //     DBConnection::getInstance()->connectDB();
-        //     $status = "Connected";
-        // } catch (\Exception $e) {
-        //     $status = "Connection Faiiiled: " . $e->getMessage();
-        // }
-
+          if (!isset($_SESSION['user_id'])) {
+            header('Location: /login');
+            exit();
+        }
         
         return View::render('admin.dashboard');
     }

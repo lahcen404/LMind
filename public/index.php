@@ -3,6 +3,12 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 
 
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv->load();
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 
 use app\Helpers\View;
@@ -39,4 +45,7 @@ $router->get('/trainer/evaluations','EvaluationController@index');
 $router->get('/trainer/evaluations/create','EvaluationController@create');
 
 $router->get('/404','NotFoundController@index');
+
+$router->post('/login','AuthController@login');
+$router->get('/logout','AuthController@logout');
 $router->dispatch();

@@ -7,6 +7,11 @@ use app\Helpers\View;
 class TrainerController{
 
     public function index(){
+          if (!isset($_SESSION['user_id'])) {
+            header('Location: /login');
+            exit();
+        }
+        
         return View::render('trainer.dashboard');
     }
 }
