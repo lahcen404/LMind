@@ -30,14 +30,17 @@
         </div>
 
         <!-- Form Body -->
-        <form action="/users/store" method="POST" class="p-8 space-y-8" onsubmit="return false;">
+        <form action="/admin/users/create" method="POST" class="p-8 space-y-8" ">
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <!-- Full Name -->
                 <div class="space-y-2">
                     <label for="name" class="block text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Full Name</label>
-                    <input type="text" id="name" name="name" placeholder="e.g. John Doe" required
+                    <input type="text" id="name" name="fullName" placeholder="e.g. John Doe" required
                         class="block w-full px-5 py-4 bg-slate-900 border border-slate-700 rounded-2xl text-white focus:ring-2 focus:ring-indigo-600 outline-none transition-all placeholder:text-slate-600 font-medium">
+                        @if(isset($_SESSION['errors']['fullName']))
+                    <p class="text-red-400 text-[10px] font-bold">{{ $_SESSION['errors']['fullName'] }}</p>
+                    @endif
                 </div>
 
                 <!-- System Role -->
@@ -46,9 +49,9 @@
                     <div class="relative group">
                         <select id="role" name="role" required class="block w-full px-5 py-4 bg-slate-900 border border-slate-700 rounded-2xl text-white text-sm focus:ring-2 focus:ring-indigo-600 outline-none transition-all appearance-none cursor-pointer">
                             <option value="" disabled selected>Select user role...</option>
-                            <option value="student">Student (Apprenant)</option>
-                            <option value="trainer">Trainer (Formateur)</option>
-                            <option value="admin">Administrator</option>
+                            <option value="LEARNER">Student (Apprenant)</option>
+                            <option value="TRAINER">Trainer (Formateur)</option>
+                            <option value="ADMIN">Administrator</option>
                         </select>
                         <div class="absolute inset-y-0 right-0 flex items-center px-5 pointer-events-none text-slate-500 group-focus-within:text-indigo-400">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
@@ -62,7 +65,10 @@
                 <label for="email" class="block text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Email Address</label>
                 <input type="email" id="email" name="email" placeholder="user@lmind.com" required
                     class="block w-full px-5 py-4 bg-slate-900 border border-slate-700 rounded-2xl text-white focus:ring-2 focus:ring-indigo-600 outline-none transition-all placeholder:text-slate-600 font-medium">
-            </div>
+                @if(isset($_SESSION['errors']['email']))
+                    <p class="text-red-400 text-[10px] font-bold">{{ $_SESSION['errors']['email'] }}</p>
+                    @endif
+                </div>
 
             <!-- Password -->
             <div class="space-y-2">
@@ -70,7 +76,10 @@
                 <div class="relative group">
                     <input type="password" id="password" name="password" placeholder="••••••••" required
                         class="block w-full px-5 py-4 bg-slate-900 border border-slate-700 rounded-2xl text-white focus:ring-2 focus:ring-indigo-600 outline-none transition-all placeholder:text-slate-600 font-medium">
-                    <button type="button" class="absolute inset-y-0 right-0 px-5 text-slate-500 hover:text-indigo-400 transition-colors">
+                    @if(isset($_SESSION['errors']['password']))
+                    <p class="text-red-400 text-[10px] font-bold">{{ $_SESSION['errors']['password'] }}</p>
+                    @endif
+                        <button type="button" class="absolute inset-y-0 right-0 px-5 text-slate-500 hover:text-indigo-400 transition-colors">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
                     </button>
                 </div>

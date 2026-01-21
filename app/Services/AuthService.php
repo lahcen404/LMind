@@ -9,15 +9,20 @@ use app\Repositories\UserRepository;
 class AuthService
 {
     
-    private UserRepository $userRepository;
 
-    public function __construct()
+    private static ?AuthService $instance = null; 
+
+    public static function getInstance(): AuthService
     {
-        $this->userRepository = new UserRepository();
+        if (self::$instance === null) {
+            self::$instance = new AuthService();
+        }
+        return self::$instance;
     }
 
     public function login(string $rEmail, string $rPassword){
 
+         $userRepository = UserRepository::getInstance();
         $errors = [] ;
 
             $email = Validation::clean($rEmail);
@@ -37,12 +42,12 @@ class AuthService
             $errors;
         }
 
-        $user = $this->userRepository->findByEmail($email);
+        $user = $userRepository->findUserByEmail($email);
 
         $isMatch = $user && (password_verify($password, $user->getPassword()) || ($password === $user->getPassword()));
 
         if (!$isMatch) {
-            $errors['login'] = "Email & Password incorrect !!";
+            $errors['login'] = "Email or Password incorrect !!";
             return $errors;
         }
 

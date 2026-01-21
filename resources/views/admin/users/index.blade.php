@@ -10,17 +10,17 @@
             <h1 class="text-3xl font-bold text-white tracking-tight">User Management</h1>
             <p class="text-slate-400 mt-1 font-medium">Manage accounts, permissions, and roles for the entire LMind platform.</p>
         </div>
-        <button class="bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-3 rounded-xl font-bold shadow-lg shadow-indigo-600/20 transition-all active:scale-95 flex items-center space-x-2">
+        <a href="/admin/users/create" class="bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-3 rounded-xl font-bold shadow-lg shadow-indigo-600/20 transition-all active:scale-95 flex items-center space-x-2">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" /></svg>
             <span>Add New User</span>
-        </button>
+        </a>
     </div>
 
     <!-- Quick Stats & Role Filters -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <div class="bg-slate-800 p-5 rounded-2xl border border-slate-700 shadow-sm hover:border-indigo-500/50 transition cursor-pointer group">
             <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1 group-hover:text-indigo-400">Total Personnel</p>
-            <h3 class="text-2xl font-bold text-white">142</h3>
+            <h3 class="text-2xl font-bold text-white">{{@count($users)}}</h3>
         </div>
         <div class="bg-slate-800 p-5 rounded-2xl border border-slate-700 shadow-sm hover:border-purple-500/50 transition cursor-pointer group">
             <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1 group-hover:text-purple-400">Trainers</p>
@@ -67,88 +67,36 @@
                 </thead>
                 <tbody class="divide-y divide-slate-700/50">
                     <!-- Static Admin User -->
+                     @foreach($users as $user)
                     <tr class="hover:bg-slate-700/30 transition group">
                         <td class="px-6 py-6">
                             <div class="flex items-center space-x-4">
                                 <div class="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-500 font-black text-xs">A</div>
                                 <div>
-                                    <p class="text-sm font-bold text-white tracking-tight">System Administrator</p>
-                                    <p class="text-[10px] text-slate-500 font-bold uppercase tracking-tighter">ID: #0001</p>
+                                    <p class="text-sm font-bold text-white tracking-tight">{{$user->getFullName()}}</p>
+                                    <p class="text-[10px] text-slate-500 font-bold uppercase tracking-tighter">ID: #{{$user->getId()}}</p>
                                 </div>
                             </div>
                         </td>
-                        <td class="px-6 py-6 text-sm text-slate-300 font-medium">admin@lmind.com</td>
+                        <td class="px-6 py-6 text-sm text-slate-300 font-medium">{{$user->getEmail()}}</td>
                         <td class="px-6 py-6">
-                            <span class="px-2.5 py-1 bg-amber-500/10 text-amber-500 text-[10px] font-black uppercase tracking-widest rounded-md border border-amber-500/20">Administrator</span>
+                            <span class="px-2.5 py-1 bg-amber-500/10 text-amber-500 text-[10px] font-black uppercase tracking-widest rounded-md border border-amber-500/20">{{$user->getRole()->value}}</span>
                         </td>
                         <td class="px-6 py-6 text-right">
                             <div class="flex items-center justify-end space-x-2">
-                                <button class="p-2 text-slate-500 hover:text-indigo-400 transition-colors" title="Update User">
+                                <a href="/admin/users/edit?id={{ $user->getId() }}" class="p-2 text-slate-500 hover:text-indigo-400 transition-colors" title="Update User">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
-                                </button>
-                                <button class="p-2 text-slate-500 hover:text-red-400 transition-colors" title="Delete User">
+                                </a>
+                                <a href="/admin/users/delete?id={{ $user->getId() }}"
+                                onclick="return confirm('Are you sure to Delete User !!??')"
+                                class="p-2 text-slate-500 hover:text-red-400 transition-colors" title="Delete User">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
-                                </button>
+                                </a>
                             </div>
                         </td>
                     </tr>
-
-                    <!-- Static Trainer User -->
-                    <tr class="hover:bg-slate-700/30 transition group">
-                        <td class="px-6 py-6">
-                            <div class="flex items-center space-x-4">
-                                <img src="https://ui-avatars.com/api/?name=Amine+Bell&background=6366f1&color=fff" class="w-10 h-10 rounded-xl shadow-lg" alt="">
-                                <div>
-                                    <p class="text-sm font-bold text-white tracking-tight">Amine Bell</p>
-                                    <p class="text-[10px] text-slate-500 font-bold uppercase tracking-tighter">ID: #0042</p>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="px-6 py-6 text-sm text-slate-300 font-medium">amine.bell@lmind.com</td>
-                        <td class="px-6 py-6">
-                            <span class="px-2.5 py-1 bg-indigo-500/10 text-indigo-400 text-[10px] font-black uppercase tracking-widest rounded-md border border-indigo-500/20">Trainer</span>
-                        </td>
-                        <td class="px-6 py-6 text-right">
-                            <div class="flex items-center justify-end space-x-2">
-                                <button class="p-2 text-slate-500 hover:text-indigo-400 transition-colors" title="Update User">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
-                                </button>
-                                <button class="p-2 text-slate-500 hover:text-red-400 transition-colors" title="Delete User">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <!-- Static Student User -->
-                    <tr class="hover:bg-slate-700/30 transition group">
-                        <td class="px-6 py-6">
-                            <div class="flex items-center space-x-4">
-                                <img src="https://ui-avatars.com/api/?name=Sarah+Green&background=10b981&color=fff" class="w-10 h-10 rounded-xl shadow-lg" alt="">
-                                <div>
-                                    <p class="text-sm font-bold text-white tracking-tight">Sarah Green</p>
-                                    <p class="text-[10px] text-slate-500 font-bold uppercase tracking-tighter">ID: #0821</p>
-                                </div>
-                            </div>
-                        </td>
-                        <td class="px-6 py-6 text-sm text-slate-300 font-medium">sarah.g@student.com</td>
-                        <td class="px-6 py-6">
-                            <span class="px-2.5 py-1 bg-emerald-500/10 text-emerald-400 text-[10px] font-black uppercase tracking-widest rounded-md border border-emerald-500/20">Student</span>
-                        </td>
-                        <td class="px-6 py-6 text-right">
-                            <div class="flex items-center justify-end space-x-2">
-                                <button class="p-2 text-slate-500 hover:text-indigo-400 transition-colors" title="Update User">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" /></svg>
-                                </button>
-                                <button class="p-2 text-slate-500 hover:text-red-400 transition-colors" title="Delete User">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
+                    @endforeach
                 </tbody>
-            </table>
-        </div>
 
         <!-- Pagination -->
         <div class="p-6 bg-slate-900/30 border-t border-slate-700/50 flex flex-col sm:flex-row items-center justify-between gap-4">

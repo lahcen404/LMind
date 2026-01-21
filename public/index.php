@@ -1,6 +1,8 @@
 <?php
 
+
 require_once __DIR__ . '/../vendor/autoload.php';
+
 
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
@@ -47,5 +49,11 @@ $router->get('/trainer/evaluations/create','EvaluationController@create');
 $router->get('/404','NotFoundController@index');
 
 $router->post('/login','AuthController@login');
+$router->post('/admin/users/create','UsersController@store');
+$router->get('/admin/users/delete','UsersController@delete');
+
+$router->get('/admin/users/edit','UsersController@edit');
+$router->post('/admin/users/update','UsersController@update');
+
 $router->get('/logout','AuthController@logout');
 $router->dispatch();
