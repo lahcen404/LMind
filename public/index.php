@@ -23,6 +23,9 @@ $router->get('/','HomeController@index');
 $router->get('/login','AuthController@index');
 $router->get('/admin/dashboard','AdminController@index');
 
+$router->get('/admin/classes/assignement','ClassController@assignement');
+$router->get('/admin/classes/assignement/learners','ClassController@assignLearner');
+
 
 $router->get('/admin/classes', 'ClassController@index');
 $router->get('/admin/classes/create', 'ClassController@createClass');

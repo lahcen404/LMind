@@ -8,13 +8,9 @@ use app\Services\UserService;
 
 class ClassController
 {
-    private ClassService $classService;
-    private UserService $userService;
-
+   
     public function __construct()
     {
-        $this->classService = ClassService::getInstance();
-        $this->userService = UserService::getInstance();
 
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
@@ -28,7 +24,10 @@ class ClassController
             exit();
         }
 
-        $classes = $this->classService->getAllClasses();
+         $classService = ClassService::getInstance();
+        $userService = UserService::getInstance();
+
+        $classes = $classService->getAllClasses();
         View::render('admin.classes.index', ['classes' => $classes]);
     }
 
@@ -39,7 +38,10 @@ class ClassController
             exit();
         }
 
-        $allUsers = $this->userService->getAllUsers();
+         $classService = ClassService::getInstance();
+        $userService = UserService::getInstance();
+
+        $allUsers = $userService->getAllUsers();
         $trainers = array_filter($allUsers, function ($user) {
             return $user->getRole()->value === 'TRAINER';
         });
@@ -49,7 +51,11 @@ class ClassController
 
     public function store()
     {
-        if ($this->classService->createClass($_POST)) {
+
+         $classService = ClassService::getInstance();
+        $userService = UserService::getInstance();
+
+        if ($classService->createClass($_POST)) {
             $_SESSION['success'] = "Class created successfully!";
             header('Location: /admin/classes');
         } else {
@@ -61,20 +67,24 @@ class ClassController
 
     public function edit()
     {
+
+         $classService = ClassService::getInstance();
+        $userService = UserService::getInstance();
+
         $id = isset($_GET['id']) ? (int)$_GET['id'] : null;
         if (!$id) {
             header('Location: /admin/classes');
             exit();
         }
 
-        $class = $this->classService->getClassById($id);
+        $class = $classService->getClassById($id);
         if (!$class) {
             $_SESSION['error'] = "Class not found.";
             header('Location: /admin/classes');
             exit();
         }
 
-        $allUsers = $this->userService->getAllUsers();
+        $allUsers = $userService->getAllUsers();
         $trainers = array_filter($allUsers, function ($user) {
             return $user->getRole()->value === 'TRAINER';
         });
@@ -87,13 +97,16 @@ class ClassController
 
     public function update()
     {
+         $classService = ClassService::getInstance();
+        $userService = UserService::getInstance();
+
         $id = isset($_POST['id']) ? (int)$_POST['id'] : null;
         if (!$id) {
             header('Location: /admin/classes');
             exit();
         }
 
-        if ($this->classService->updateClass($id, $_POST)) {
+        if ($classService->updateClass($id, $_POST)) {
             $_SESSION['success'] = "Class updated successfully!";
             header('Location: /admin/classes');
         } else {
@@ -105,8 +118,11 @@ class ClassController
 
     public function delete()
     {
+         $classService = ClassService::getInstance();
+        $userService = UserService::getInstance();
+        
         $id = isset($_GET['id']) ? (int)$_GET['id'] : null;
-        if ($id && $this->classService->deleteClass($id)) {
+        if ($id && $classService->deleteClass($id)) {
             $_SESSION['success'] = "Class deleted successfully!";
         } else {
             $_SESSION['error'] = "Failed to delete class.";
