@@ -30,7 +30,7 @@ class ClassDAO
     {
         $sql = "SELECT c.*, u.fullname as trainer_name 
                 FROM training_Class c 
-                LEFT JOIN users u ON c.formateur_id = u.id 
+                LEFT JOIN users u ON c.trainer_id = u.id 
                 ORDER BY c.id DESC";
         
         $stmt = $this->db->query($sql);
@@ -51,7 +51,7 @@ class ClassDAO
   
     public function create(array $data): bool
     {
-        $sql = "INSERT INTO training_Class (nom, promotion, formateur_id) 
+        $sql = "INSERT INTO training_Class (name, promotion, trainer_id) 
                 VALUES (:name, :promotion, :trainer_id)";
         
         $stmt = $this->db->prepare($sql);
@@ -66,9 +66,9 @@ class ClassDAO
     public function update(int $id, array $data): bool
     {
         $sql = "UPDATE training_Class 
-                SET nom = :name, 
+                SET name = :name, 
                     promotion = :promotion, 
-                    formateur_id = :trainer_id 
+                    trainer_id = :trainer_id 
                 WHERE id = :id";
         
         $stmt = $this->db->prepare($sql);

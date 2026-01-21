@@ -23,14 +23,14 @@ class ClassService
 
     public function getAllClasses(): array
     {
-                $classRepository = ClassRepository::getInstance();
+        $classRepository = ClassRepository::getInstance();
 
         return $classRepository->findAll();
     }
 
     public function getClassById(int $id): ?TrainingClass
     {
-                $classRepository = ClassRepository::getInstance();
+        $classRepository = ClassRepository::getInstance();
 
         return $classRepository->findById($id);
     }
