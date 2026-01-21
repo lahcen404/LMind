@@ -17,6 +17,31 @@ class ClassController
         }
     }
 
+    public function assignLearner()
+    {
+          if (!isset($_SESSION['user_id'])) {
+            header('Location: /login');
+            exit();
+        }
+        
+        return View::render('admin.classes.assignLearners');
+    }
+
+    public function assignement()
+    {
+
+          if (!isset($_SESSION['user_id'])) {
+            header('Location: /login');
+            exit();
+        }
+
+         $classService = ClassService::getInstance();
+
+        $classes = $classService->getAllClasses();
+
+        return View::render('admin.classes.assignement',['classes'=>$classes]);
+    }
+
     public function index()
     {
         if (!isset($_SESSION['user_id'])) {
@@ -25,7 +50,6 @@ class ClassController
         }
 
          $classService = ClassService::getInstance();
-        $userService = UserService::getInstance();
 
         $classes = $classService->getAllClasses();
         View::render('admin.classes.index', ['classes' => $classes]);
@@ -38,7 +62,6 @@ class ClassController
             exit();
         }
 
-         $classService = ClassService::getInstance();
         $userService = UserService::getInstance();
 
         $allUsers = $userService->getAllUsers();
@@ -53,7 +76,6 @@ class ClassController
     {
 
          $classService = ClassService::getInstance();
-        $userService = UserService::getInstance();
 
         if ($classService->createClass($_POST)) {
             $_SESSION['success'] = "Class created successfully!";
@@ -98,7 +120,6 @@ class ClassController
     public function update()
     {
          $classService = ClassService::getInstance();
-        $userService = UserService::getInstance();
 
         $id = isset($_POST['id']) ? (int)$_POST['id'] : null;
         if (!$id) {
@@ -119,7 +140,6 @@ class ClassController
     public function delete()
     {
          $classService = ClassService::getInstance();
-        $userService = UserService::getInstance();
         
         $id = isset($_GET['id']) ? (int)$_GET['id'] : null;
         if ($id && $classService->deleteClass($id)) {
