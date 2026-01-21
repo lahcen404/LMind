@@ -19,7 +19,7 @@ class UserDAO{
         return self::$instance;
     }
 
-    public function __construct()
+    private function __construct()
     {
         $this->db = DBConnection::getInstance()->connectDB();
     }
@@ -49,12 +49,12 @@ class UserDAO{
     }
 
       public function update(int $id, array $data): bool {
-        $sql = "UPDATE users SET fullname = :fullname, email = :email, role = :role 
+        $sql = "UPDATE users SET fullname = :fullName, email = :email, role = :role 
                 WHERE id = :id";
         $stmt = $this->db->prepare($sql);
         return $stmt->execute([
             'id'       => $id,
-            'fullname' => $data['fullName'],
+            'fullName' => $data['fullName'],
             'email'    => $data['email'],
             'role'     => $data['role']
         ]);

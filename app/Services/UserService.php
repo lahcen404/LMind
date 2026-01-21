@@ -24,6 +24,7 @@ class UserService{
     public function createUser(array $data){
 
         $errors=[];
+
         $userRepository = UserRepository::getInstance();
 
         $fullName = Validation::clean($data['fullName']);
@@ -63,6 +64,8 @@ class UserService{
 
     public function updateUser(int $id, array $data)
     {
+
+        $errors=[];
         $userRepository = UserRepository::getInstance();
 
         $user = $userRepository->findUserById($id);

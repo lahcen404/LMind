@@ -75,5 +75,51 @@ class UsersController{
         exit();
     }
 
-    
+    public function edit()
+    {
+        $userService = UserService::getInstance();
+
+        $userId = isset($_GET['id']) ? (int)$_GET['id'] : null;
+
+        if ($userId === null) {
+            $_SESSION['error'] = "Invalid user ID.";
+            header('Location: /admin/users');
+            exit();
+        }
+
+        $user = $userService->getUserById($userId);
+
+        if (!$user) {
+            $_SESSION['error'] = "User not found.";
+            header('Location: /admin/users');
+            exit();
+        }
+
+        return View::render('admin.users.edit', ['user' => $user]);
+    }
+
+    public function update()
+    {
+        $userService = UserService::getInstance();
+
+        $userId = isset($_POST['id']) ? (int)$_POST['id'] : null;
+
+        if ($userId === null) {
+            $_SESSION['error'] = "Invaliid user id !!!";
+            header('Location: /admin/users');
+            exit();
+        }
+
+        $result = $userService->updateUser($userId, $_POST);
+
+        if ($result) {
+            $_SESSION['success'] = "User updated successfully!!!";
+            header('Location: /admin/users');
+            exit();
+        } else {
+            $_SESSION['error'] = "Failed to update user!!!";
+            header('Location: /admin/users/edit?id=' . $userId);
+            exit();
+        }
+    }
 }
