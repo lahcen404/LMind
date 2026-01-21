@@ -45,4 +45,14 @@ class UserMapper{
         };
 
     }
+
+    public static function toArray(User $user){
+        return [
+            
+            'fullName' => $user->getFullName(),
+            'email' => $user->getEmail(),
+            'password' => $user->getPassword(),
+            'role' => $user->getRole()->value
+        ];
+    }
 }

@@ -73,12 +73,7 @@ class UserRepository
 
         $userDAO = UserDAO::getInstance();
 
-        $data=[
-            'fullName' => $user->getFullName(),
-            'email' => $user->getEmail(),
-            'password' => $user->getPassword(),
-            'role' => $user->getRole()->value,
-        ];
+        $data=UserMapper::toArray($user);
 
         return $userDAO->create($data);
     }
@@ -87,13 +82,7 @@ class UserRepository
 
         $userDAO = UserDAO::getInstance();
 
-        $data = [
-            
-            'fullName' => $user->getFullName(),
-            'email' => $user->getEmail(),
-            'password' => $user->getPassword(),
-            'role' => $user->getRole()->value
-        ];
+        $data = UserMapper::toArray($user);
 
         return $userDAO->update($user->getId(),$data);
     }
