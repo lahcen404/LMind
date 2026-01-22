@@ -68,7 +68,7 @@
                             <td class="px-6 py-6 text-right">
                                 <div class="flex items-center justify-end space-x-2 opacity-0 group-hover:opacity-100 transition-all duration-200 translate-x-2 group-hover:translate-x-0">
                                    
-                                    <a href="/admin/classes/assignment?id={{ $class->getId() }}" class="p-2.5 bg-slate-900 border border-slate-700 rounded-xl text-slate-400 hover:text-emerald-400 hover:border-emerald-500/50 transition shadow-sm" title="Manage Roster">
+                                    <a href="/admin/classes/enroll?id={{ $class->getId() }}" class="p-2.5 bg-slate-900 border border-slate-700 rounded-xl text-slate-400 hover:text-emerald-400 hover:border-emerald-500/50 transition shadow-sm" title="Manage Roster">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
                                     </a>
                                     

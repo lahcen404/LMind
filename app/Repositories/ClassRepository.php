@@ -3,7 +3,9 @@
 namespace app\Repositories;
 
 use app\DAOs\ClassDAO;
+use app\DAOs\UserDAO;
 use app\Mappers\ClassMapper;
+use app\Mappers\UserMapper;
 use app\Models\TrainingClass;
 
 class ClassRepository

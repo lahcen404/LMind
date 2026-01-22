@@ -51,8 +51,8 @@
                         <p class="text-white font-bold">{{ $class->getTrainerName() }}</p>
                     </div>
                     
-                    {{-- Updated route to lead to the actual assignment workspace --}}
-                    <a href="/admin/classes/assignment?id={{ $class->getId() }}" 
+                    {{-- FIXED: Points to /enroll to trigger manageRoster() in ClassController --}}
+                    <a href="/admin/classes/enroll?id={{ $class->getId() }}" 
                        class="px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white text-[11px] font-black uppercase tracking-widest rounded-xl transition-all active:scale-95 shadow-lg shadow-indigo-600/20">
                         Manage Roster
                     </a>

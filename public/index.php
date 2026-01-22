@@ -24,7 +24,14 @@ $router->get('/login','AuthController@index');
 $router->get('/admin/dashboard','AdminController@index');
 
 $router->get('/admin/classes/assignement','ClassController@assignement');
-$router->get('/admin/classes/assignement/learners','ClassController@assignLearner');
+
+
+// assign
+$router->get('/admin/classes/assignment', 'ClassController@assignment');
+$router->get('/admin/classes/enroll', 'ClassController@assignStudents');
+$router->get('/admin/classes/assign-action', 'ClassController@assign');
+$router->get('/admin/classes/unassign-action', 'ClassController@unassign'); 
+
 
 
 $router->get('/admin/classes', 'ClassController@index');

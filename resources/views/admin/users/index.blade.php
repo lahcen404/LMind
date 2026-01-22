@@ -24,11 +24,11 @@
         </div>
         <div class="bg-slate-800 p-5 rounded-2xl border border-slate-700 shadow-sm hover:border-purple-500/50 transition cursor-pointer group">
             <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1 group-hover:text-purple-400">Trainers</p>
-            <h3 class="text-2xl font-bold text-white">12</h3>
+            <h3 class="text-2xl font-bold text-white">{{@count($countTrainers)}}</h3>
         </div>
         <div class="bg-slate-800 p-5 rounded-2xl border border-slate-700 shadow-sm hover:border-emerald-500/50 transition cursor-pointer group">
             <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1 group-hover:text-emerald-400">Students</p>
-            <h3 class="text-2xl font-bold text-white">124</h3>
+            <h3 class="text-2xl font-bold text-white">{{@count($countLearners)}}</h3>
         </div>
         <div class="bg-slate-800 p-5 rounded-2xl border border-slate-700 shadow-sm hover:border-amber-500/50 transition cursor-pointer group">
             <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-1 group-hover:text-amber-400">Admins</p>

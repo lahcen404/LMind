@@ -89,29 +89,8 @@ class ClassDAO
     }
 
 
-    public function getUnassignedLearners(): array
-    {
-        $sql = "SELECT * FROM users WHERE role = 'LEARNER' AND class_id IS NULL ORDER BY fullName ASC";
-        return $this->db->query($sql)->fetchAll();
-    }
+   
 
-     public function getLearnersByClass(int $classId): array
-    {
-        $sql = "SELECT * FROM users WHERE role = 'LEARNER' AND class_id = :classId ORDER BY fullName ASC";
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute(['classId' => $classId]);
-        return $stmt->fetchAll();
-    }
-
-    public function updateClassId(int $userId, ?int $classId): bool
-    {
-        $sql = "UPDATE users SET class_id = :classId WHERE id = :userId";
-        $stmt = $this->db->prepare($sql);
-        return $stmt->execute([
-            'classId' => $classId,
-            'userId'  => $userId
-        ]);
-    }
 
    
 }

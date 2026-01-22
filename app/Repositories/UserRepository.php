@@ -50,6 +50,8 @@ class UserRepository
         return null;
     }
 
+    
+
    
 
     public function getAllUsers(): array{
@@ -91,6 +93,56 @@ class UserRepository
 
         $userDAO = UserDAO::getInstance();
         return $userDAO->delete($id);
+    }
+
+    
+    public function findUnassignedLearners(): array 
+    {
+        $userDao = UserDAO::getInstance();
+
+        $rawData = $userDao->getUnassignedLearners(); 
+        $users = [];
+        foreach($rawData as $data) {
+            $user = UserMapper::toEntity($data);
+            if ($user) {
+                $users[] = $user;
+            }
+        }
+        return $users;
+    }
+
+    public function findLearnersByClass(int $classId): array 
+    {
+        $userDao = UserDAO::getInstance();
+
+        $rawData = $userDao->getLearnersByClass($classId);
+        $users = [];
+        foreach($rawData as $data) {
+            $user = UserMapper::toEntity($data);
+            if ($user) {
+                $users[] = $user;
+            }
+        }
+        return $users;
+    }
+
+    public function updateClassID(int $userId, ?int $classId): bool
+    {
+        $userDao = UserDAO::getInstance();
+
+        return $userDao->updateClassId($userId, $classId);
+    }
+
+    public function getCountLearners(){
+        $userDao = UserDAO::getInstance();
+
+        return $userDao->getCountLearners();
+    }
+
+    public function getCountTrainers(){
+        $userDao = UserDAO::getInstance();
+
+        return $userDao->getCountTrianers();
     }
 
 }
