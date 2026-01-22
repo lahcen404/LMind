@@ -10,7 +10,6 @@ class SprintRepository
 {
     private static ?SprintRepository $instance = null;
 
-    // singleton instance
     public static function getInstance(): SprintRepository
     {
         if (self::$instance === null) {
