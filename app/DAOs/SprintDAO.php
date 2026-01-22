@@ -23,7 +23,7 @@ class SprintDAO
     public function getAll(): array
     {
         $db = DBConnection::getInstance()->connectDB();
-        $sql = "SELECT s.*, c.nom as class_name 
+        $sql = "SELECT s.*, c.name as class_name 
                 FROM sprints s 
                 JOIN training_Class c ON s.class_Id = c.id 
                 ORDER BY s.class_Id, s.order_Sprint ASC";
@@ -34,7 +34,7 @@ class SprintDAO
     public function findById(int $id): ?array
     {
         $db = DBConnection::getInstance()->connectDB();
-        $sql = "SELECT s.*, c.nom as class_name 
+        $sql = "SELECT s.*, c.name as class_name 
                 FROM sprints s 
                 JOIN training_Class c ON s.class_Id = c.id 
                 WHERE s.id = :id";
