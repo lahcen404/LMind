@@ -7,50 +7,47 @@ DROP TABLE IF EXISTS sprints;
 DROP TABLE IF EXISTS training_Class;
 DROP TABLE IF EXISTS users;
 
-
 DROP TYPE IF EXISTS User_Role;
 DROP TYPE IF EXISTS Brief_Type;
 DROP TYPE IF EXISTS mastery_level;
+DROP TYPE IF EXISTS skill_category;
 
-
--- ENUMs
 CREATE TYPE User_Role as ENUM ('ADMIN','TRAINER','LEARNER');
 CREATE TYPE Brief_Type as ENUM ('INDIVIDUAL','COLLECTIVE');
 CREATE TYPE mastery_level as ENUM ('IMITATE','ADAPT','TRANSPOSE');
 CREATE TYPE skill_category as ENUM ('FRONTEND','BACKEND','DEVOPS','SOFTSKILLS');
 
--- table users
+-- tables users
 CREATE TABLE users (
+    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    fullName VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    role User_Role NOT NULL,
+    class_id INT
+);
 
-   id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-   fullName VARCHAR(255) NOT NULL,
-   email VARCHAR(255) NOT NULL UNIQUE,
-   password VARCHAR(255) NOT NULL,
-   role User_Role NOT NULL
-   
-   );
+-- table training_class
+CREATE TABLE training_Class (
+    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    promotion VARCHAR(50) NOT NULL,
+    trainer_Id INT REFERENCES users(id) ON DELETE SET NULL
+);
 
-   select * from users;
+-- constraint : if  deletee a class don't delete students
+ALTER TABLE users 
+ADD CONSTRAINT fk_user_class FOREIGN KEY (class_id) REFERENCES training_Class(id) ON DELETE SET NULL;
 
--- table classses
-   CREATE TABLE training_Class(
-
-	id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-	name VARCHAR(255) NOT NULL,
-	trainer_Id INT REFERENCES users(id)
-	
-	);
-
-	-- table sprints
-CREATE TABLE sprints(
-	
-	id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-	name VARCHAR(255) NOT NULL,
-	duration INT NOT NULL,
-	order_Sprint INT NOT NULL,
-	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	class_Id INT REFERENCES training_Class(id) ON DELETE CASCADE
-	);
+-- table sprints
+CREATE TABLE sprints (
+    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    duration INT NOT NULL,
+    order_Sprint INT NOT NULL,
+    class_Id INT REFERENCES training_Class(id) ON DELETE CASCADE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
 -- table briefs
 CREATE TABLE briefs (
@@ -59,16 +56,16 @@ CREATE TABLE briefs (
     description TEXT NOT NULL,
     duration INT NOT NULL, 
     type Brief_Type NOT NULL, 
-	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    sprint_id INT REFERENCES sprints(id) ON DELETE CASCADE
+    sprint_id INT REFERENCES sprints(id) ON DELETE CASCADE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- table skills
 CREATE TABLE skills (
     id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    code VARCHAR(10) NOT NULL, 
-    description TEXT NOT NULL ,
-	category skill_category not null
+    code VARCHAR(10) NOT NULL UNIQUE, 
+    description TEXT NOT NULL,
+    category skill_category NOT NULL
 );
 
 -- table brief_skills
@@ -87,7 +84,7 @@ CREATE TABLE livrables (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- table evaluations
+-- table evaluationss
 CREATE TABLE evaluations (
     id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     learner_id INT REFERENCES users(id) ON DELETE CASCADE,
@@ -95,7 +92,6 @@ CREATE TABLE evaluations (
     skill_id INT REFERENCES skills(id) ON DELETE CASCADE,
     level mastery_level NOT NULL, 
     comment TEXT, 
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT unique_evaluation UNIQUE (learner_id, brief_id, skill_id)
 );
-
-select * from skills

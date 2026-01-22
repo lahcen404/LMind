@@ -22,10 +22,24 @@ $router->get('/','HomeController@index');
 
 $router->get('/login','AuthController@index');
 $router->get('/admin/dashboard','AdminController@index');
-$router->get('/admin/classes/create','ClassController@createClass');
+
 $router->get('/admin/classes/assignement','ClassController@assignement');
-$router->get('/admin/classes/assignement/learners','ClassController@assignLearner');
-$router->get('/admin/classes','ClassController@index');
+
+
+// assign
+$router->get('/admin/classes/assignment', 'ClassController@assignment');
+$router->get('/admin/classes/enroll', 'ClassController@assignStudents');
+$router->get('/admin/classes/assign-action', 'ClassController@assign');
+$router->get('/admin/classes/unassign-action', 'ClassController@unassign'); 
+
+
+
+$router->get('/admin/classes', 'ClassController@index');
+$router->get('/admin/classes/create', 'ClassController@createClass');
+$router->post('/admin/classes/create', 'ClassController@store');
+$router->get('/admin/classes/edit', 'ClassController@edit');
+$router->post('/admin/classes/update', 'ClassController@update');
+$router->get('/admin/classes/delete', 'ClassController@delete');
 
 $router->get('/admin/sprints','SprintController@index');
 $router->get('/admin/sprints/create','SprintController@create');

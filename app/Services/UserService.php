@@ -100,5 +100,46 @@ class UserService{
     }
 
     
+    // assign learner tooo a classs
+
+      public function getUnassignedLearners(): array
+    {
+        $userRepository = UserRepository::getInstance();
+
+        return $userRepository->findUnassignedLearners();
+    }
+
+    public function getLearnersByClass(int $classId): array
+    {
+        $userRepository = UserRepository::getInstance();
+
+        return $userRepository->findLearnersByClass($classId);
+    }
+
+    public function assignToClass(int $userId, int $classId): bool
+    {
+        $userRepository = UserRepository::getInstance();
+
+        return $userRepository->updateClassID($userId, $classId);
+    }
+
+    public function removeFromClass(int $userId): bool
+    {
+        $userRepository = UserRepository::getInstance();
+
+        return $userRepository->updateClassID($userId, null);
+    }
+
+    public function getCountLearners(){
+        $userRepository = UserRepository::getInstance();
+
+        return $userRepository->getCountLearners();
+    }
+
+    public function getCountTrainers(){
+        $userRepository = UserRepository::getInstance();
+
+        return $userRepository->getCountTrainers();
+    }
 
 }

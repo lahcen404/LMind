@@ -18,9 +18,11 @@ class UsersController{
         }
 
         $users = $userService->getAllUsers();
+        $countLearners = $userService->getCountLearners();
+        $countTrainers = $userService->getCountTrainers();
         
 
-        return View::render('admin.users.index',['users'=>$users]);
+        return View::render('admin.users.index',['users'=>$users,'countLearners'=>$countLearners,'countTrainers'=>$countTrainers]);
     }
 
     public function create(){

@@ -31,7 +31,7 @@
                 <span class="text-green-400 text-xs font-bold">+12%</span>
             </div>
             <p class="text-slate-400 text-sm font-medium">Total Users</p>
-            <h3 class="text-2xl font-bold text-white mt-1">--</h3>
+            <h3 class="text-2xl font-bold text-white mt-1">{{count($users)}}</h3>
         </div>
 
         <!-- Card 2 -->
@@ -43,7 +43,7 @@
                 <span class="text-slate-400 text-xs font-bold">Stable</span>
             </div>
             <p class="text-slate-400 text-sm font-medium">Active Classes</p>
-            <h3 class="text-2xl font-bold text-white mt-1">--</h3>
+            <h3 class="text-2xl font-bold text-white mt-1">{{count($classes )}}</h3>
         </div>
 
         <!-- Card 3 -->
@@ -77,7 +77,7 @@
         <div class="lg:col-span-2 bg-slate-800 rounded-2xl border border-slate-700 overflow-hidden shadow-sm">
             <div class="p-6 border-b border-slate-700 flex justify-between items-center">
                 <h3 class="text-lg font-bold text-white">Latest Enrollments</h3>
-                <a href="/users" class="text-indigo-400 text-xs font-bold hover:underline">View All</a>
+                <a href="/admin/users" class="text-indigo-400 text-xs font-bold hover:underline">View All</a>
             </div>
             <div class="overflow-x-auto">
                 <table class="w-full text-left border-collapse">
@@ -86,27 +86,25 @@
                             <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-widest">User</th>
                             <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-widest">Role</th>
                             <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-widest">Status</th>
-                            <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-widest text-right">Joined</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-700/50">
-                        
+                        @foreach($users as $user)
                         <tr class="hover:bg-slate-700/30 transition">
                             <td class="px-6 py-4">
                                 <div class="flex items-center space-x-3">
                                     <div class="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center text-[10px] font-bold text-white">
                                         --
                                     </div>
-                                    <span class="text-sm font-semibold text-white">--</span>
+                                    <span class="text-sm font-semibold text-white">{{$user->getFullName()}}</span>
                                 </div>
                             </td>
-                            <td class="px-6 py-4 text-sm text-slate-400">--</td>
+                            <td class="px-6 py-4 text-sm text-slate-400">{{$user->getRole()->value}}</td>
                             <td class="px-6 py-4">
                                 <span class="px-2 py-1 bg-green-500/10 text-green-400 text-[10px] font-bold uppercase tracking-wider rounded-md border border-green-500/20">Active</span>
                             </td>
-                            <td class="px-6 py-4 text-sm text-slate-500 text-right">--</td>
                         </tr>
-                       
+                       @endforeach
                     </tbody>
                 </table>
             </div>
