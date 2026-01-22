@@ -45,6 +45,9 @@ $router->get('/admin/sprints','SprintController@index');
 $router->get('/admin/sprints/create','SprintController@create');
 $router->get('/admin/sprints/view','SprintController@view');
 $router->post('/admin/sprints/create','SprintController@store');
+$router->get('/admin/sprints/edit','SprintController@edit');
+$router->post('/admin/sprints/update','SprintController@update');
+$router->get('/admin/sprints/delete','SprintController@delete');
 
 
 $router->get('/admin/skills','SkillController@index');

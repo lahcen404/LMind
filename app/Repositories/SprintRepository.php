@@ -25,7 +25,7 @@ class SprintRepository
     {
         $sprintDAO = SprintDAO::getInstance();
         $rawData = $sprintDAO->getAll();
-        
+        $classes = [];
         foreach($rawData as $row){
             $classes[] = SprintMapper::toEntity($row);
         }
