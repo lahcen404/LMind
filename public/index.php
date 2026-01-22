@@ -52,6 +52,10 @@ $router->get('/admin/sprints/delete','SprintController@delete');
 
 $router->get('/admin/skills','SkillController@index');
 $router->get('/admin/skills/create','SkillController@create');
+$router->post('/admin/skills/create','SkillController@store');
+$router->get('/admin/skills/edit','SkillController@edit');
+$router->post('/admin/skills/update','SkillController@update');
+$router->get('/admin/skills/delete','SkillController@delete');
 
 $router->get('/admin/users','UsersController@index');
 $router->get('/admin/users/create','UsersController@create');
