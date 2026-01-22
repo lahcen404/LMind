@@ -5,12 +5,13 @@
 @section('content')
 <div class="max-w-3xl mx-auto py-4">
     <!-- Breadcrumb -->
-    <a href="/skills" class="inline-flex items-center text-indigo-400 hover:text-indigo-300 font-bold text-xs mb-8 transition group">
+    <a href="/admin/skills" class="inline-flex items-center text-indigo-400 hover:text-indigo-300 font-bold text-xs mb-8 transition group">
         <svg class="w-3 h-3 mr-2 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
         </svg>
         Back to Framework Matrix
     </a>
+
 
     <!-- Form Container -->
     <div class="bg-slate-800 rounded-3xl border border-slate-700 shadow-2xl overflow-hidden">
@@ -30,26 +31,26 @@
         </div>
 
         <!-- Form Body -->
-        <form action="/skills/store" method="POST" class="p-8 space-y-8" onsubmit="return false;">
+        <form action="/admin/skills/create" method="POST" class="p-8 space-y-8">
             
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <!-- Skill Code (C1, C2...) -->
+                <!-- Skill Code -->
                 <div class="space-y-2">
                     <label for="code" class="block text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Skill Code</label>
-                    <input type="text" id="code" name="code" placeholder="e.g. C5" 
+                    <input type="text" id="code" name="code" required placeholder="e.g. C5" 
                         class="block w-full px-5 py-4 bg-slate-900 border border-slate-700 rounded-2xl text-white focus:ring-2 focus:ring-indigo-600 outline-none transition-all placeholder:text-slate-600 font-black text-center text-indigo-400">
                 </div>
 
-                <!-- Category Selector -->
+                <!-- Category Selector (Values match SkillCategory Enum) -->
                 <div class="md:col-span-3 space-y-2">
                     <label for="category" class="block text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Matrix Category</label>
                     <div class="relative group">
-                        <select id="category" name="category" class="block w-full px-5 py-4 bg-slate-900 border border-slate-700 rounded-2xl text-white text-sm focus:ring-2 focus:ring-indigo-600 outline-none transition-all appearance-none cursor-pointer">
+                        <select id="category" name="category" required class="block w-full px-5 py-4 bg-slate-900 border border-slate-700 rounded-2xl text-white text-sm focus:ring-2 focus:ring-indigo-600 outline-none transition-all appearance-none cursor-pointer">
                             <option value="" disabled selected>Select category...</option>
-                            <option value="Frontend">Frontend Development</option>
-                            <option value="Backend">Backend & Persistence</option>
-                            <option value="Mobile">Mobile Development</option>
-                            <option value="SoftSkills">Soft Skills</option>
+                            <option value="FRONTEND">Frontend Development</option>
+                            <option value="BACKEND">Backend & Persistence</option>
+                            <option value="DEVOPS">DevOps & Deployment</option>
+                            <option value="SOFTSKILLS">Soft Skills</option>
                         </select>
                         <div class="absolute inset-y-0 right-0 flex items-center px-5 pointer-events-none text-slate-500 group-focus-within:text-indigo-400">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
@@ -58,30 +59,21 @@
                 </div>
             </div>
 
-            <!-- Competency Label -->
+            <!-- Description (Mapped to the 'description' attribute in DB/Service) -->
             <div class="space-y-2">
-                <label for="label" class="block text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Competency Label</label>
-                <input type="text" id="label" name="label" placeholder="e.g. Développer les composants d'accès aux données" 
-                    class="block w-full px-5 py-4 bg-slate-900 border border-slate-700 rounded-2xl text-white focus:ring-2 focus:ring-indigo-600 outline-none transition-all placeholder:text-slate-600 font-bold">
-            </div>
-
-            <!-- Short Description / Criteria -->
-            <div class="space-y-2">
-                <label for="description" class="block text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Short Description / Tools</label>
-                <textarea id="description" name="description" rows="3" placeholder="e.g. SQL, SGBD, Modélisation de données..." 
+                <label for="description" class="block text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-1">Competency Description</label>
+                <textarea id="description" name="description" rows="4" required placeholder="e.g. Développer les composants d'accès aux données (SQL, SGBD, Modélisation...)" 
                     class="block w-full px-5 py-4 bg-slate-900 border border-slate-700 rounded-2xl text-white focus:ring-2 focus:ring-indigo-600 outline-none transition-all placeholder:text-slate-600 resize-none font-medium text-sm"></textarea>
             </div>
 
             <!-- Action Buttons -->
             <div class="flex items-center justify-end space-x-5 pt-6 border-t border-slate-700/50">
-                <button type="button" class="px-6 py-3 text-slate-500 font-bold hover:text-white transition-colors">Discard</button>
+                <a href="/admin/skills" class="px-6 py-3 text-slate-500 font-bold hover:text-white transition-colors">Discard</a>
                 <button type="submit" class="px-10 py-4 bg-indigo-600 hover:bg-indigo-500 text-white font-black rounded-2xl shadow-xl shadow-indigo-600/20 transition-all active:scale-95 uppercase tracking-widest text-[11px]">
                     Register Code
                 </button>
             </div>
         </form>
     </div>
-
-    
 </div>
 @endsection
