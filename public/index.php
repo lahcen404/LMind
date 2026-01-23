@@ -61,10 +61,19 @@ $router->get('/admin/users','UsersController@index');
 $router->get('/admin/users/create','UsersController@create');
 
 $router->get('/trainer/dashboard','TrainerController@index');
-$router->get('/trainer/briefs','BriefController@index');
-$router->get('/trainer/briefs/skills','BriefController@linkSkills');
-$router->get('/trainer/briefs/create','BriefController@create');
-$router->get('/trainer/briefs/details','BriefController@details');
+
+$router->get('/trainer/briefs', 'BriefController@index');
+
+$router->get('/trainer/briefs/create', 'BriefController@create');
+$router->post('/trainer/briefs/store', 'BriefController@store');
+$router->get('/trainer/briefs/details', 'BriefController@details');
+$router->get('/trainer/briefs/edit', 'BriefController@edit');
+$router->post('/trainer/briefs/update', 'BriefController@update');
+$router->get('/trainer/briefs/delete', 'BriefController@delete');
+
+$router->get('/trainer/briefs/skills', 'BriefController@linkSkills');
+$router->post('/trainer/briefs/skills/sync', 'BriefController@syncSkills');
+
 
 $router->get('/trainer/evaluations','EvaluationController@index');
 $router->get('/trainer/evaluations/create','EvaluationController@create');

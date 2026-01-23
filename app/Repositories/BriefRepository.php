@@ -25,7 +25,11 @@ class BriefRepository
     {
         $briefDAO = BriefDAO::getInstance();
         $rawData = $briefDAO->getAll();
-        return array_map([BriefMapper::class, 'toEntity'], $rawData);
+        $briefs = [];
+        foreach($rawData as $row){
+            $briefs[] = BriefMapper::toEntity($row);
+        }
+        return $briefs;
     }
 
     // find by id
