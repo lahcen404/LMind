@@ -20,6 +20,7 @@
                             <a href="/admin/users" class="px-3 py-2 rounded-md text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-700 transition">Users</a>
                             <a href="/admin/classes" class="px-3 py-2 rounded-md text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-700 transition">Classes</a>
                             <a href="/admin/skills" class="px-3 py-2 rounded-md text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-700 transition">Skills</a>
+                            <a href="/admin/sprints" class="px-3 py-2 rounded-md text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-700 transition">Sprints</a>
                         @elseif($role === 'TRAINER')
                             <a href="/trainer/dashboard" class="px-3 py-2 rounded-md text-sm font-medium text-white bg-slate-900">Dashboard</a>
                             <a href="/trainer/briefs" class="px-3 py-2 rounded-md text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-700 transition">My Briefs</a>
