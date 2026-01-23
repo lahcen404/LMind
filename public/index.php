@@ -1,9 +1,6 @@
 <?php
 
-
 require_once __DIR__ . '/../vendor/autoload.php';
-
-
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
 $dotenv->load();
@@ -12,80 +9,76 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-
-use app\Helpers\View;
 use app\Routes\Router;
 
 $router = new Router();
 
-$router->get('/','HomeController@index');
+// auth
+$router->get('/login', 'AuthController@index', ['guest']);
+$router->post('/login', 'AuthController@login');
+$router->get('/logout', 'AuthController@logout');
 
-$router->get('/login','AuthController@index');
-$router->get('/admin/dashboard','AdminController@index');
+// admin
+$router->get('/admin/dashboard', 'AdminController@index', ['auth', 'admin']);
 
-$router->get('/admin/classes/assignement','ClassController@assignement');
+// classes
+$router->get('/admin/classes', 'ClassController@index', ['auth', 'admin']);
+$router->get('/admin/classes/create', 'ClassController@createClass', ['auth', 'admin']);
+$router->post('/admin/classes/create', 'ClassController@store', ['auth', 'admin']);
+$router->get('/admin/classes/edit', 'ClassController@edit', ['auth', 'admin']);
+$router->post('/admin/classes/update', 'ClassController@update', ['auth', 'admin']);
+$router->get('/admin/classes/delete', 'ClassController@delete', ['auth', 'admin']);
+$router->get('/admin/classes/assignment', 'ClassController@assignment', ['auth', 'admin']);
+$router->get('/admin/classes/assignement', 'ClassController@assignement', ['auth', 'admin']);
+$router->get('/admin/classes/enroll', 'ClassController@assignStudents', ['auth', 'admin']);
+$router->get('/admin/classes/assign-action', 'ClassController@assign', ['auth', 'admin']);
+$router->get('/admin/classes/unassign-action', 'ClassController@unassign', ['auth', 'admin']); 
 
+// sprints
+$router->get('/admin/sprints', 'SprintController@index', ['auth', 'admin']);
+$router->get('/admin/sprints/create', 'SprintController@create', ['auth', 'admin']);
+$router->post('/admin/sprints/create', 'SprintController@store', ['auth', 'admin']);
+$router->get('/admin/sprints/view', 'SprintController@view', ['auth', 'admin']);
+$router->get('/admin/sprints/edit', 'SprintController@edit', ['auth', 'admin']);
+$router->post('/admin/sprints/update', 'SprintController@update', ['auth', 'admin']);
+$router->get('/admin/sprints/delete', 'SprintController@delete', ['auth', 'admin']);
 
-// assign
-$router->get('/admin/classes/assignment', 'ClassController@assignment');
-$router->get('/admin/classes/enroll', 'ClassController@assignStudents');
-$router->get('/admin/classes/assign-action', 'ClassController@assign');
-$router->get('/admin/classes/unassign-action', 'ClassController@unassign'); 
+// skills
+$router->get('/admin/skills', 'SkillController@index', ['auth', 'admin']);
+$router->get('/admin/skills/create', 'SkillController@create', ['auth', 'admin']);
+$router->post('/admin/skills/create', 'SkillController@store', ['auth', 'admin']);
+$router->get('/admin/skills/edit', 'SkillController@edit', ['auth', 'admin']);
+$router->post('/admin/skills/update', 'SkillController@update', ['auth', 'admin']);
+$router->get('/admin/skills/delete', 'SkillController@delete', ['auth', 'admin']);
 
+// users
+$router->get('/admin/users', 'UsersController@index', ['auth', 'admin']);
+$router->get('/admin/users/create', 'UsersController@create', ['auth', 'admin']);
+$router->post('/admin/users/create', 'UsersController@store', ['auth', 'admin']);
+$router->get('/admin/users/edit', 'UsersController@edit', ['auth', 'admin']);
+$router->post('/admin/users/update', 'UsersController@update', ['auth', 'admin']);
+$router->get('/admin/users/delete', 'UsersController@delete', ['auth', 'admin']);
 
+// trainer
+$router->get('/trainer/dashboard', 'TrainerController@index', ['auth', 'trainer']);
 
-$router->get('/admin/classes', 'ClassController@index');
-$router->get('/admin/classes/create', 'ClassController@createClass');
-$router->post('/admin/classes/create', 'ClassController@store');
-$router->get('/admin/classes/edit', 'ClassController@edit');
-$router->post('/admin/classes/update', 'ClassController@update');
-$router->get('/admin/classes/delete', 'ClassController@delete');
+// briefs
+$router->get('/trainer/briefs', 'BriefController@index', ['auth', 'trainer']);
+$router->get('/trainer/briefs/create', 'BriefController@create', ['auth', 'trainer']);
+$router->post('/trainer/briefs/store', 'BriefController@store', ['auth', 'trainer']);
+$router->get('/trainer/briefs/details', 'BriefController@details', ['auth', 'trainer']);
+$router->get('/trainer/briefs/edit', 'BriefController@edit', ['auth', 'trainer']);
+$router->post('/trainer/briefs/update', 'BriefController@update', ['auth', 'trainer']);
+$router->get('/trainer/briefs/delete', 'BriefController@delete', ['auth', 'trainer']);
+$router->get('/trainer/briefs/skills', 'BriefController@linkSkills', ['auth', 'trainer']);
+$router->post('/trainer/briefs/skills/sync', 'BriefController@syncSkills', ['auth', 'trainer']);
 
-$router->get('/admin/sprints','SprintController@index');
-$router->get('/admin/sprints/create','SprintController@create');
-$router->get('/admin/sprints/view','SprintController@view');
-$router->post('/admin/sprints/create','SprintController@store');
-$router->get('/admin/sprints/edit','SprintController@edit');
-$router->post('/admin/sprints/update','SprintController@update');
-$router->get('/admin/sprints/delete','SprintController@delete');
+// evaluations
+$router->get('/trainer/evaluations', 'EvaluationController@index', ['auth', 'trainer']);
+$router->get('/trainer/evaluations/create', 'EvaluationController@create', ['auth', 'trainer']);
 
+// system
+$router->get('/', 'HomeController@index');
+$router->get('/404', 'NotFoundController@index');
 
-$router->get('/admin/skills','SkillController@index');
-$router->get('/admin/skills/create','SkillController@create');
-$router->post('/admin/skills/create','SkillController@store');
-$router->get('/admin/skills/edit','SkillController@edit');
-$router->post('/admin/skills/update','SkillController@update');
-$router->get('/admin/skills/delete','SkillController@delete');
-
-$router->get('/admin/users','UsersController@index');
-$router->get('/admin/users/create','UsersController@create');
-
-$router->get('/trainer/dashboard','TrainerController@index');
-
-$router->get('/trainer/briefs', 'BriefController@index');
-
-$router->get('/trainer/briefs/create', 'BriefController@create');
-$router->post('/trainer/briefs/store', 'BriefController@store');
-$router->get('/trainer/briefs/details', 'BriefController@details');
-$router->get('/trainer/briefs/edit', 'BriefController@edit');
-$router->post('/trainer/briefs/update', 'BriefController@update');
-$router->get('/trainer/briefs/delete', 'BriefController@delete');
-
-$router->get('/trainer/briefs/skills', 'BriefController@linkSkills');
-$router->post('/trainer/briefs/skills/sync', 'BriefController@syncSkills');
-
-
-$router->get('/trainer/evaluations','EvaluationController@index');
-$router->get('/trainer/evaluations/create','EvaluationController@create');
-
-$router->get('/404','NotFoundController@index');
-
-$router->post('/login','AuthController@login');
-$router->post('/admin/users/create','UsersController@store');
-$router->get('/admin/users/delete','UsersController@delete');
-
-$router->get('/admin/users/edit','UsersController@edit');
-$router->post('/admin/users/update','UsersController@update');
-
-$router->get('/logout','AuthController@logout');
 $router->dispatch();
