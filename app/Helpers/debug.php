@@ -1,5 +1,5 @@
 <?php
-
+namespace app\Helpers;
 function dd($data)
 {
     echo '<pre>';
