@@ -6,7 +6,7 @@ use app\DAOs\SprintDAO;
 use app\Mappers\SprintMapper;
 use app\Models\Sprint;
 
-class SprintRepository
+    class SprintRepository
 {
     private static ?SprintRepository $instance = null;
 

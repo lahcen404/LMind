@@ -3,9 +3,11 @@
 namespace app\Controllers;
 
 use app\Helpers\View;
+use app\Helpers\debug;
 use app\Services\BriefService;
 use app\Services\SkillService;
 use app\Services\SprintService;
+
 
 class BriefController
 {
@@ -64,7 +66,7 @@ class BriefController
         exit();
     }
 
-    // view brief details
+    // view brief detaiiils
     public function details()
     {
         if (!isset($_SESSION['user_id'])) {
@@ -73,6 +75,7 @@ class BriefController
         }
 
         $briefService = BriefService::getInstance();
+        $skillService = SkillService::getInstance();
         $id = isset($_GET['id']) ? (int)$_GET['id'] : null;
         $brief = $briefService->getBriefById($id);
 
@@ -82,10 +85,20 @@ class BriefController
         }
 
         $linkedSkillIds = $briefService->getBriefSkillIds($id);
+        $allSkills = $skillService->getAllSkills();
+        
+        //skill details for linkeed skills
+        $linkedSkills = [];
+        foreach ($allSkills as $skill) {
+            if (in_array($skill->getId(), $linkedSkillIds)) {
+                $linkedSkills[] = $skill;
+            }
+        }
+
         
         View::render('trainer.briefs.show', [
             'brief' => $brief,
-            'linkedSkillIds' => $linkedSkillIds
+            'linkedSkills' => $linkedSkills
         ]);
     }
 
