@@ -9,7 +9,6 @@ class BriefDAO
 {
     private static ?BriefDAO $instance = null;
 
-    // get instance
     public static function getInstance(): BriefDAO
     {
         if (self::$instance === null) {
@@ -162,4 +161,5 @@ class BriefDAO
         $stmt->execute(['briefId' => $briefId]);
         return $stmt->fetchAll(PDO::FETCH_COLUMN);
     }
+    
 }

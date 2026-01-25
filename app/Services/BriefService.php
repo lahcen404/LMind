@@ -110,4 +110,19 @@ class BriefService
         $briefRepository = BriefRepository::getInstance();
         return $briefRepository->getSkillIds($briefId);
     }
+
+    public function getAvailableBriefs(): array
+    {
+        return BriefRepository::getInstance()->findUnassigned();
+    }
+
+     public function assignBriefToSprint(int $briefId, int $sprintId): bool
+    {
+        if ($briefId <= 0 || $sprintId <= 0) {
+            return false;
+        }
+
+        $repo = BriefRepository::getInstance();
+        return $repo->assignToSprint($briefId, $sprintId);
+    }
 }

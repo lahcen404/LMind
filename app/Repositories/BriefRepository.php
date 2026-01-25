@@ -74,4 +74,16 @@ class BriefRepository
         $briefDAO = BriefDAO::getInstance();
         return $briefDAO->getSkillIds($briefId);
     }
+
+    public function assignToSprint(int $briefId, int $sprintId): bool
+    {
+        return BriefDAO::getInstance()->updateSprintId($briefId, $sprintId);
+    }
+    
+    public function findUnassigned(): array
+    {
+        $rawData = BriefDAO::getInstance()->getUnassigned();
+        return array_map([BriefMapper::class, 'toEntity'], $rawData);
+    }
+
 }

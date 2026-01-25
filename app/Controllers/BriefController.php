@@ -3,11 +3,10 @@
 namespace app\Controllers;
 
 use app\Helpers\View;
-use app\Helpers\debug;
 use app\Services\BriefService;
 use app\Services\SkillService;
 use app\Services\SprintService;
-
+use app\Services\ClassService;
 
 class BriefController
 {
@@ -18,7 +17,7 @@ class BriefController
         }
     }
 
-    // list all briefs
+    // list all briefs in the library
     public function index()
     {
         if (!isset($_SESSION['user_id'])) {
@@ -66,7 +65,7 @@ class BriefController
         exit();
     }
 
-    // view brief detaiiils
+    // view brief details
     public function details()
     {
         if (!isset($_SESSION['user_id'])) {
@@ -76,6 +75,7 @@ class BriefController
 
         $briefService = BriefService::getInstance();
         $skillService = SkillService::getInstance();
+        
         $id = isset($_GET['id']) ? (int)$_GET['id'] : null;
         $brief = $briefService->getBriefById($id);
 
@@ -87,7 +87,6 @@ class BriefController
         $linkedSkillIds = $briefService->getBriefSkillIds($id);
         $allSkills = $skillService->getAllSkills();
         
-        //skill details for linkeed skills
         $linkedSkills = [];
         foreach ($allSkills as $skill) {
             if (in_array($skill->getId(), $linkedSkillIds)) {
@@ -95,7 +94,6 @@ class BriefController
             }
         }
 
-        
         View::render('trainer.briefs.show', [
             'brief' => $brief,
             'linkedSkills' => $linkedSkills
@@ -217,6 +215,71 @@ class BriefController
         }
 
         header('Location: /trainer/briefs/details?id=' . $briefId);
+        exit();
+    }
+
+  // assign 
+    public function assign()
+    {
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: /login');
+            exit();
+        }
+
+        $classService = ClassService::getInstance();
+        $sprintService = SprintService::getInstance();
+        $briefService = BriefService::getInstance();
+
+        // brief we will assign
+        $briefId = isset($_GET['brief_id']) ? (int)$_GET['brief_id'] : null;
+        $brief = $briefService->getBriefById($briefId);
+
+        if (!$brief) {
+            $_SESSION['error'] = "Project context required.";
+            header('Location: /trainer/briefs');
+            exit();
+        }
+
+        
+        $classes = $classService->getAllClasses();
+
+        $selectedClassId = isset($_GET['class_id']) ? (int)$_GET['class_id'] : null;
+        $sprints = [];
+        if ($selectedClassId) {
+            $allSprints = $sprintService->getAllSprints();
+            $sprints = array_filter($allSprints, function($s) use ($selectedClassId) {
+                return $s->getClassId() === $selectedClassId;
+            });
+        }
+
+        View::render('trainer.briefs.assign', [
+            'brief' => $brief,
+            'classes' => $classes,
+            'sprints' => $sprints,
+            'selectedClassId' => $selectedClassId
+        ]);
+    }
+
+    
+    public function processAssignment()
+    {
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: /login');
+            exit();
+        }
+
+        $briefService = BriefService::getInstance();
+
+        $briefId = isset($_POST['brief_id']) ? (int)$_POST['brief_id'] : null;
+        $sprintId = isset($_POST['sprint_id']) ? (int)$_POST['sprint_id'] : null;
+
+        if ($briefService->assignBriefToSprint($briefId, $sprintId)) {
+            $_SESSION['success'] = "Brief distributed to the class timeline.";
+            header('Location: /trainer/briefs');
+        } else {
+            $_SESSION['error'] = "Failed to distribute brief.";
+            header('Location: /trainer/briefs/assign?brief_id=' . $briefId);
+        }
         exit();
     }
 }
