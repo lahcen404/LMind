@@ -16,8 +16,6 @@
         </a>
     </div>
 
-
-
     <!-- Filter & Search Bar -->
     <div class="bg-slate-800 p-4 rounded-2xl border border-slate-700 flex flex-col md:flex-row gap-4 justify-between items-center shadow-sm">
         <div class="relative w-full md:w-96">
@@ -34,6 +32,7 @@
             </select>
         </div>
     </div>
+
 
     <!-- Brief Cards Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -75,10 +74,17 @@
                 </div>
                 
                 <div class="bg-slate-900/40 px-6 py-4 flex items-center justify-between border-t border-slate-700/50">
-                    <a href="/trainer/briefs/details?id={{ $brief->getId() }}" class="text-xs font-bold text-indigo-400 hover:text-indigo-300 transition flex items-center">
-                        View Details
-                        <svg class="w-3.5 h-3.5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
-                    </a>
+                    <div class="flex flex-col space-y-1">
+                        <a href="/trainer/briefs/details?id={{ $brief->getId() }}" class="text-xs font-bold text-indigo-400 hover:text-indigo-300 transition flex items-center">
+                            View Details
+                            <svg class="w-3.5 h-3.5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+                        </a>
+                        <!-- NEW: ASSIGN TO CLASS LINK -->
+                        <a href="/trainer/briefs/assign?brief_id={{ $brief->getId() }}" class="text-[10px] font-black uppercase text-emerald-400 hover:text-emerald-300 transition-colors tracking-widest">
+                            Assign to Class →
+                        </a>
+                    </div>
+                    
                     <div class="flex items-center space-x-2">
                         <!-- Manage Skills Link -->
                         <a href="/trainer/briefs/skills?id={{ $brief->getId() }}" class="p-2 text-slate-500 hover:text-indigo-400 transition" title="Manage Skills">
@@ -92,7 +98,7 @@
                         <a href="/trainer/briefs/delete?id={{ $brief->getId() }}" 
                            onclick="return confirm('Permanently delete this project brief?')"
                            class="p-2 text-slate-500 hover:text-red-400 transition" title="Delete Brief">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
                         </a>
                     </div>
                 </div>

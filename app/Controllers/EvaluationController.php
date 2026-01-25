@@ -19,32 +19,31 @@ class EvaluationController
     }
 
     
-    public function index()
+  public function index()
     {
         $classService = ClassService::getInstance();
         $userService = UserService::getInstance();
         $briefService = BriefService::getInstance();
 
-       
         $classes = $classService->getAllClasses();
         
-        
+        // Capture both IDs from the URL
         $selectedClassId = isset($_GET['class_id']) ? (int)$_GET['class_id'] : null;
-        
+        $selectedBriefId = isset($_GET['brief_id']) ? (int)$_GET['brief_id'] : null;
         
         $learners = [];
         if ($selectedClassId) {
             $learners = $userService->getLearnersByClass($selectedClassId);
         }
 
-        
         $briefs = $briefService->getAllBriefs();
 
         View::render('trainer.evaluations.index', [
             'classes' => $classes,
             'learners' => $learners,
             'briefs' => $briefs,
-            'selectedClassId' => $selectedClassId 
+            'selectedClassId' => $selectedClassId,
+            'selectedBriefId' => $selectedBriefId 
         ]);
     }
 

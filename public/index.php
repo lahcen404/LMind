@@ -73,11 +73,16 @@ $router->get('/trainer/briefs/delete', 'BriefController@delete', ['auth', 'train
 $router->get('/trainer/briefs/skills', 'BriefController@linkSkills', ['auth', 'trainer']);
 $router->post('/trainer/briefs/skills/sync', 'BriefController@syncSkills', ['auth', 'trainer']);
 
+$router->get('/trainer/briefs/assign', 'BriefController@assign', ['auth', 'trainer']);
+$router->post('/trainer/briefs/assign/store', 'BriefController@processAssignment', ['auth', 'trainer']);
+
+
+
 // evaluations
 $router->get('/trainer/evaluations', 'EvaluationController@index', ['auth', 'trainer']);
 $router->get('/trainer/evaluations/create', 'EvaluationController@create', ['auth', 'trainer']);
 $router->post('/trainer/evaluations/store', 'EvaluationController@store', ['auth', 'trainer']);
-$router->get('/trainer/evaluations/history', 'EvaluationController@history', ['auth', 'trainer']);
+// $router->get('/trainer/evaluations/history', 'EvaluationController@history', ['auth', 'trainer']);
 
 // system
 $router->get('/', 'HomeController@index');
