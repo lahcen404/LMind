@@ -76,6 +76,8 @@ $router->post('/trainer/briefs/skills/sync', 'BriefController@syncSkills', ['aut
 // evaluations
 $router->get('/trainer/evaluations', 'EvaluationController@index', ['auth', 'trainer']);
 $router->get('/trainer/evaluations/create', 'EvaluationController@create', ['auth', 'trainer']);
+$router->post('/trainer/evaluations/store', 'EvaluationController@store', ['auth', 'trainer']);
+$router->get('/trainer/evaluations/history', 'EvaluationController@history', ['auth', 'trainer']);
 
 // system
 $router->get('/', 'HomeController@index');
