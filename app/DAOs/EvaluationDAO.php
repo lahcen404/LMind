@@ -3,12 +3,12 @@
 namespace app\DAOs;
 
 use config\DBConnection;
+use PDO;
 
 class EvaluationDAO
 {
     private static ?EvaluationDAO $instance = null;
 
-   
     public static function getInstance(): EvaluationDAO
     {
         if (self::$instance === null) {
@@ -24,7 +24,7 @@ class EvaluationDAO
     {
         $db = DBConnection::getInstance()->connectDB();
         $sql = "SELECT e.*, 
-                       u.fullname as learner_name, 
+                       u.fullName as learner_name, 
                        b.title as brief_title, 
                        s.code as skill_code
                 FROM evaluations e
@@ -40,7 +40,7 @@ class EvaluationDAO
     public function findById(int $id): ?array
     {
         $db = DBConnection::getInstance()->connectDB();
-        $sql = "SELECT e.*, u.fullname as learner_name, b.title as brief_title, s.code as skill_code
+        $sql = "SELECT e.*, u.fullName as learner_name, b.title as brief_title, s.code as skill_code
                 FROM evaluations e
                 JOIN users u ON e.learner_id = u.id
                 JOIN briefs b ON e.brief_id = b.id
@@ -69,12 +69,14 @@ class EvaluationDAO
         return $stmt->fetchAll();
     }
 
-    // creeate evaluation
+    // save or update evaluation
     public function create(array $data): bool
     {
         $db = DBConnection::getInstance()->connectDB();
         $sql = "INSERT INTO evaluations (learner_id, brief_id, skill_id, level, comment) 
-                VALUES (:learner_id, :brief_id, :skill_id, :level, :comment)";
+                VALUES (:learner_id, :brief_id, :skill_id, :level, :comment)
+                ON CONFLICT (learner_id, brief_id, skill_id) 
+                DO UPDATE SET level = EXCLUDED.level, comment = EXCLUDED.comment";
         
         $stmt = $db->prepare($sql);
         return $stmt->execute([
@@ -86,7 +88,7 @@ class EvaluationDAO
         ]);
     }
 
-    // update evaluation
+    // update evaluation by id
     public function update(int $id, array $data): bool
     {
         $db = DBConnection::getInstance()->connectDB();

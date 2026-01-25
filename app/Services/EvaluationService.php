@@ -11,7 +11,6 @@ class EvaluationService
 {
     private static ?EvaluationService $instance = null;
 
-    
     public static function getInstance(): EvaluationService
     {
         if (self::$instance === null) {
@@ -29,21 +28,21 @@ class EvaluationService
         return $evaluationRepository->findAll();
     }
 
-    // get by id
+    // find evaluation by id
     public function getEvaluationById(int $id): ?Evaluation
     {
         $evaluationRepository = EvaluationRepository::getInstance();
         return $evaluationRepository->findById($id);
     }
 
-    // get learner progress
+    // get history of a student
     public function getLearnerProgress(int $learnerId): array
     {
         $evaluationRepository = EvaluationRepository::getInstance();
         return $evaluationRepository->findByLearner($learnerId);
     }
 
-    // save evaluation
+    // save evaluatioon
     public function saveEvaluation(array $data): bool
     {
         $evaluationRepository = EvaluationRepository::getInstance();
@@ -55,6 +54,7 @@ class EvaluationService
         $comment = Validation::clean($data['comment'] ?? '');
 
         try {
+            
             $level = MasteryLevel::from($levelStr);
             $evaluation = new Evaluation(null, $learnerId, $briefId, $skillId, $level, $comment);
             return $evaluationRepository->save($evaluation);
@@ -63,7 +63,7 @@ class EvaluationService
         }
     }
 
-    // update evaluation
+    // update 
     public function updateEvaluation(int $id, array $data): bool
     {
         $evaluationRepository = EvaluationRepository::getInstance();

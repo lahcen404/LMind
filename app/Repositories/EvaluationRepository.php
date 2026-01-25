@@ -10,7 +10,6 @@ class EvaluationRepository
 {
     private static ?EvaluationRepository $instance = null;
 
-    // get instance
     public static function getInstance(): EvaluationRepository
     {
         if (self::$instance === null) {
@@ -21,19 +20,19 @@ class EvaluationRepository
 
     private function __construct() {}
 
-    // find all with details
+    // find all evaluations
     public function findAll(): array
     {
         $evaluationDAO = EvaluationDAO::getInstance();
         $rawData = $evaluationDAO->getAllWithDetails();
         $evaluations = [];
-        foreach($rawData as $row){
+        foreach ($rawData as $row) {
             $evaluations[] = EvaluationMapper::toEntity($row);
         }
         return $evaluations;
     }
 
-    // find by id
+    // find evaluation by id
     public function findById(int $id): ?Evaluation
     {
         $evaluationDAO = EvaluationDAO::getInstance();
@@ -41,8 +40,8 @@ class EvaluationRepository
         return $data ? EvaluationMapper::toEntity($data) : null;
     }
 
-    // find by learner
-   public function findByLearner(int $learnerId): array
+    // find hiiistory for a learner
+    public function findByLearner(int $learnerId): array
     {
         $evaluationDAO = EvaluationDAO::getInstance();
         $rawData = $evaluationDAO->getByLearner($learnerId);
@@ -53,7 +52,7 @@ class EvaluationRepository
         return $evaluations;
     }
 
-    // save evaluation
+    // create evaluation
     public function save(Evaluation $evaluation): bool
     {
         $evaluationDAO = EvaluationDAO::getInstance();
@@ -61,7 +60,7 @@ class EvaluationRepository
         return $evaluationDAO->create($data);
     }
 
-    // update evaluation
+    // update  evaaluation
     public function update(int $id, Evaluation $evaluation): bool
     {
         $evaluationDAO = EvaluationDAO::getInstance();
@@ -69,7 +68,7 @@ class EvaluationRepository
         return $evaluationDAO->update($id, $data);
     }
 
-    // remove evaluation
+    // remove evaluation 
     public function remove(int $id): bool
     {
         $evaluationDAO = EvaluationDAO::getInstance();
